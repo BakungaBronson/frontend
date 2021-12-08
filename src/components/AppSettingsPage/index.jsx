@@ -328,7 +328,7 @@ class AppSettingsPage extends React.Component {
       app,
     } = this.props;
 
-    if (!newImage && replicas === "") {
+    if (!newImage && replicas === "" && !domainName) {
       this.setState({
         error: "No changes made",
       });
@@ -392,7 +392,7 @@ class AppSettingsPage extends React.Component {
             replicas: replicas,
           };
           this.setState({ updating_form: true });
-          appInfo = { ...appInfo, custom_domain: sentDomainName };
+          appInfo = { ...appInfo, url: sentDomainName };
           updateApp(params.appID, appInfo);
         }
       } else {
@@ -646,7 +646,9 @@ class AppSettingsPage extends React.Component {
                             <div className={styles.flexa}>
                               <BlackInputText
                                 required
-                                placeholder="Domain name"
+                                placeholder={
+                                  app.url ? app.url : "Domain name"
+                                }
                                 name="domainName"
                                 value={domainName.toLowerCase()}
                                 onChange={(e) => {
